@@ -18,19 +18,14 @@ spec:
   values:
     provider: google
 
-    # Wichtig: Projekt hier setzen, damit es NICHT leer ist
     google:
       project: timebertt-dhbw
 
-    # Deine Einstellungen
-    domainFilters:
-      - dski23a.timebertt.dev
-    txtOwnerId: student-sepf
-    sources:
-      - ingress
-      - service
+    # wichtig: env (nicht extraEnv)
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/secrets/google/service-account.json
 
-    # ADC sauber setzen: Secret mounten + ENV zeigen lassen
     extraVolumes:
       - name: gcp-sa
         secret:
@@ -39,6 +34,14 @@ spec:
       - name: gcp-sa
         mountPath: /var/secrets/google
         readOnly: true
-    extraEnv:
-      - name: GOOGLE_APPLICATION_CREDENTIALS
-        value: /var/secrets/google/service-account.json
+
+    # optional, aber robust falls 'google.project' ignoriert würde:
+    extraArgs:
+      - --google-project=timebertt-dhbw
+
+    domainFilters:
+      - dski23a.timebertt.dev
+    txtOwnerId: student-sepf
+    sources:
+      - ingress
+      - service
