@@ -5,8 +5,6 @@ metadata:
   namespace: ingress-nginx
 spec:
   interval: 5m
-  install:
-    createNamespace: true
   chart:
     spec:
       chart: ingress-nginx
@@ -16,10 +14,9 @@ spec:
         name: ingress-nginx
         namespace: flux-system
       interval: 1m
+  install:
+    createNamespace: true
   values:
     controller:
-      ingressClassResource:
-        name: nginx
-        default: true
       service:
         type: LoadBalancer
