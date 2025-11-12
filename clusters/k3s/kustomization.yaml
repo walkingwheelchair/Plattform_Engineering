@@ -3,5 +3,7 @@ kind: Kustomization
 resources:
   - namespaces/podinfo-dev.yaml
   - namespaces/podinfo-prod.yaml
+  - infra/helmrepo-ingress-nginx.yaml
+  - infra/ingress-nginx
   - podinfo/dev
   - podinfo/prod
