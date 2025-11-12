@@ -10,44 +10,35 @@ spec:
   chart:
     spec:
       chart: external-dns
-      # zur Not Version weglassen, wenn diese nicht existiert
-      version: "1.15.0"
+      # version: "1.15.0"    # optional, du kannst die Zeile auch weglassen
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
   values:
-  provider: google
+    provider: google
 
-  # Projekt explizit als Flag (Chart-Versionen lesen 'google.project' teils nicht)
-  extraArgs:
-    - --google-project=timebertt-dhbw
-    - --policy=upsert-only
-    - --registry=txt
-    - --txt-owner-id=student-sepf
-    - --domain-filter=dski23a.timebertt.dev
-    - --source=ingress
-    - --source=service
+    # Wichtig: Projekt hier setzen, damit es NICHT leer ist
+    google:
+      project: timebertt-dhbw
 
-  # Secret mounten + ADC-ENV setzen (bruteforce, funktioniert immer)
-  google:
-    serviceAccountSecret: google-clouddns
-    serviceAccountSecretKey: service-account.json
-  extraVolumes:
-    - name: gcloud
-      secret:
-        secretName: google-clouddns
-  extraVolumeMounts:
-    - name: gcloud
-      mountPath: /var/secrets/google
-      readOnly: true
-  extraEnv:
-    - name: GOOGLE_APPLICATION_CREDENTIALS
-      value: /var/secrets/google/service-account.json
+    # Deine Einstellungen
+    domainFilters:
+      - dski23a.timebertt.dev
+    txtOwnerId: student-sepf
+    sources:
+      - ingress
+      - service
 
-  domainFilters:
-    - "dski23a.timebertt.dev"
-  txtOwnerId: "student-sepf"
-  sources:
-    - ingress
-    - service
+    # ADC sauber setzen: Secret mounten + ENV zeigen lassen
+    extraVolumes:
+      - name: gcp-sa
+        secret:
+          secretName: google-clouddns
+    extraVolumeMounts:
+      - name: gcp-sa
+        mountPath: /var/secrets/google
+        readOnly: true
+    extraEnv:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/secrets/google/service-account.json
