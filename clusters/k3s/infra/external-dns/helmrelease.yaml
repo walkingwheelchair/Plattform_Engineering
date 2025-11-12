@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      # version: "1.15.0"    # optional, du kannst die Zeile auch weglassen
+      # version: "1.15.0"   # optional
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -18,14 +18,20 @@ spec:
   values:
     provider: google
 
-    google:
-      project: timebertt-dhbw
+    # robust: Flag erzwingt das Projekt, selbst wenn 'google.project' ignoriert würde
+    extraArgs:
+      - --google-project=timebertt-dhbw
+      - --policy=upsert-only
+      - --registry=txt
+      - --txt-owner-id=student-sepf
+      - --domain-filter=dski23a.timebertt.dev
+      - --source=ingress
+      - --source=service
 
-    # wichtig: env (nicht extraEnv)
+    # ADC sauber setzen: Secret mounten + ENV auf die JSON-Datei zeigen lassen
     env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /var/secrets/google/service-account.json
-
     extraVolumes:
       - name: gcp-sa
         secret:
@@ -35,13 +41,6 @@ spec:
         mountPath: /var/secrets/google
         readOnly: true
 
-    # optional, aber robust falls 'google.project' ignoriert würde:
-    extraArgs:
-      - --google-project=timebertt-dhbw
-
-    domainFilters:
-      - dski23a.timebertt.dev
-    txtOwnerId: student-sepf
-    sources:
-      - ingress
-      - service
+    # optional (manche Chart-Versionen setzen daraus ebenfalls das Flag)
+    google:
+      project: timebertt-dhbw
