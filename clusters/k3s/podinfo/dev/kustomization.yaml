@@ -4,5 +4,3 @@ namespace: podinfo-dev
 resources:
   - ../base
   - ingress.yaml
-patches:
-  - path: patch-dev.yaml

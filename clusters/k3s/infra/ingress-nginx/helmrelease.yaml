@@ -18,5 +18,8 @@ spec:
       interval: 1m
   values:
     controller:
+      ingressClassResource:
+        name: nginx
+        default: true
       service:
         type: LoadBalancer

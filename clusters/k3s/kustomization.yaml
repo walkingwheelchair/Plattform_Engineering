@@ -4,6 +4,6 @@ resources:
   - namespaces/podinfo-dev.yaml
   - namespaces/podinfo-prod.yaml
   - infra/helmrepo-ingress-nginx.yaml
-  - infra/ingress-nginx         # hat eigene kustomization.yaml
+  - infra/ingress-nginx
   - podinfo/dev
   - podinfo/prod

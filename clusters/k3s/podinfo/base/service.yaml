@@ -8,5 +8,6 @@ spec:
   ports:
     - name: http
       port: 9898
-      targetPort: http
+      targetPort: 9898
+      protocol: TCP
   type: ClusterIP
