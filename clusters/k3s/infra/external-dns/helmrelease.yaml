@@ -18,16 +18,21 @@ spec:
         namespace: flux-system
   values:
   provider: google
-  # 1) Projekt sicher setzen
+
+  # Projekt explizit als Flag (Chart-Versionen lesen 'google.project' teils nicht)
   extraArgs:
     - --google-project=timebertt-dhbw
+    - --policy=upsert-only
+    - --registry=txt
+    - --txt-owner-id=student-sepf
+    - --domain-filter=dski23a.timebertt.dev
+    - --source=ingress
+    - --source=service
 
-  # 2) Secret korrekt mounten + Keyname explizit
+  # Secret mounten + ADC-ENV setzen (bruteforce, funktioniert immer)
   google:
     serviceAccountSecret: google-clouddns
     serviceAccountSecretKey: service-account.json
-
-  # 3) Falls das Chart die ADC-Env nicht selbst setzt, mounten wir hart:
   extraVolumes:
     - name: gcloud
       secret:
@@ -36,11 +41,10 @@ spec:
     - name: gcloud
       mountPath: /var/secrets/google
       readOnly: true
-  env:
+  extraEnv:
     - name: GOOGLE_APPLICATION_CREDENTIALS
       value: /var/secrets/google/service-account.json
 
-  # Deine Vorgaben
   domainFilters:
     - "dski23a.timebertt.dev"
   txtOwnerId: "student-sepf"
