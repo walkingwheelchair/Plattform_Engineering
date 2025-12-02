@@ -20,6 +20,8 @@ spec:
     provider: google
     google:
       project: timebertt-dhbw
+      serviceAccountSecret: google-clouddns
+      serviceAccountSecretKey: credentials.json
 
     sources:
       - ingress
@@ -30,18 +32,3 @@ spec:
 
     domainFilters:
       - "dhbw.dski23a.timebertt.dev"
-
-    extraVolumes:
-      - name: google-credentials
-        secret:
-          secretName: google-clouddns
-
-    extraVolumeMounts:
-      - name: google-credentials
-        mountPath: /var/secrets/google
-        readOnly: true
-
-    extraEnv:
-      - name: GOOGLE_APPLICATION_CREDENTIALS
-        value: /var/secrets/google/credentials.json
-
