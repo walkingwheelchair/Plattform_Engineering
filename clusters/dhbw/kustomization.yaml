@@ -7,3 +7,5 @@ resources:
   - apps/podinfo-prod.yaml
   - infra/helmrepo-ingress-nginx.yaml
   - infra/ingress-nginx/helmrelease.yaml
+  - infra/helmrepo-external-dns.yaml
+  - infra/external-dns/helmrelease.yaml
