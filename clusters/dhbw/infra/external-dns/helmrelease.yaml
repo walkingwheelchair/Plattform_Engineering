@@ -23,8 +23,6 @@ spec:
     env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /var/secrets/google/credentials.json
-      - name: GOOGLE_CLOUD_PROJECT
-        value: timebertt-dhbw
 
     extraVolumes:
       - name: google-credentials
@@ -35,6 +33,9 @@ spec:
       - name: google-credentials
         mountPath: /var/secrets/google
         readOnly: true
+
+    extraArgs:
+      google-project: timebertt-dhbw
 
     sources:
       - ingress
