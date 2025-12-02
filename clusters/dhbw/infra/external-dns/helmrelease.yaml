@@ -10,18 +10,29 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: "1.15.0"
+      version: "1.19.0"
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
       interval: 1m
   values:
-    provider: google
-    google:
-      project: timebertt-dhbw
-      serviceAccountSecret: google-clouddns
-      serviceAccountSecretKey: credentials.json
+    provider:
+      name: google
+
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/secrets/google/credentials.json
+
+    extraVolumes:
+      - name: google-credentials
+        secret:
+          secretName: google-clouddns
+
+    extraVolumeMounts:
+      - name: google-credentials
+        mountPath: /var/secrets/google
+        readOnly: true
 
     sources:
       - ingress
@@ -32,3 +43,4 @@ spec:
 
     domainFilters:
       - "dhbw.dski23a.timebertt.dev"
+
