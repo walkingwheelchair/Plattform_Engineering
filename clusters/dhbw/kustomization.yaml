@@ -1,5 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-resources: []
-
+resources:
+  - namespaces/podinfo-dev.yaml
+  - namespaces/podinfo-prod.yaml
+  - apps/podinfo-dev.yaml
+  - apps/podinfo-prod.yaml
