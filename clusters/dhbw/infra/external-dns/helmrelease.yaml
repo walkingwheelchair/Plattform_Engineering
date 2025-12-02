@@ -16,15 +16,18 @@ spec:
         name: external-dns
         namespace: flux-system
       interval: 1m
-    values:
+  values:
     provider: google
     google:
       project: timebertt-dhbw
+
     sources:
       - ingress
       - service
+
     registry: txt
     txtOwnerId: "dhbw"
+
     domainFilters:
       - "dhbw.dski23a.timebertt.dev"
 
