@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: platform-engineering
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - github.com/stefanprodan/podinfo//kustomize?ref=6.9.2
+
+configMapGenerator:
+  - name: slides-config
+    literals:
+      - course=platform-engineering
+      - base_url=https://talks.timebertt.dev/platform-engineering/
+
+generatorOptions:
+  disableNameSuffixHash: true
+
