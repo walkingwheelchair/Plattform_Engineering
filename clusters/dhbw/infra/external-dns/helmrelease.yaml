@@ -16,11 +16,10 @@ spec:
         name: external-dns
         namespace: flux-system
       interval: 1m
-  values:
+    values:
     provider: google
     google:
       project: timebertt-dhbw
-      serviceAccountSecret: google-clouddns
     sources:
       - ingress
       - service
@@ -28,3 +27,18 @@ spec:
     txtOwnerId: "dhbw"
     domainFilters:
       - "dhbw.dski23a.timebertt.dev"
+
+    extraVolumes:
+      - name: google-credentials
+        secret:
+          secretName: google-clouddns
+
+    extraVolumeMounts:
+      - name: google-credentials
+        mountPath: /var/secrets/google
+        readOnly: true
+
+    extraEnv:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/secrets/google/credentials.json
+
