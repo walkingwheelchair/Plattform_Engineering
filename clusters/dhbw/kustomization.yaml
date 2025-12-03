@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
   - namespaces/podinfo-dev.yaml
   - namespaces/podinfo-prod.yaml
-  - apps/podinfo-dev.yaml
-  - apps/podinfo-prod.yaml
   - infra/helmrepo-ingress-nginx.yaml
   - infra/ingress-nginx/helmrelease.yaml
   - infra/helmrepo-external-dns.yaml
@@ -12,3 +10,5 @@ resources:
   - infra/helmrepo-cert-manager.yaml
   - infra/cert-manager
   - kube-prometheus-stack.yaml
+  - podinfo-development.yaml
+  - podinfo-production.yaml
