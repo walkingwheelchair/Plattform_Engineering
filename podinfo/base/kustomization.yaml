@@ -7,6 +7,7 @@ resources:
 # add our Ingress manifest (from Lab ingress-nginx)
 - ingress.yaml
 - servicemonitor.yaml
+- load-generator.yaml
 
 # create a ConfigMap to hold our custom UI message
 # kustomize appends a hash to the name, so the Deployment is rolled out when the ConfigMap changes
