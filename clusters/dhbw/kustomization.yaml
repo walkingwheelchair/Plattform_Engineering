@@ -10,4 +10,4 @@ resources:
   - infra/helmrepo-external-dns.yaml
   - infra/external-dns/helmrelease.yaml
   - infra/helmrepo-cert-manager.yaml
-  - infra/cert-manager/helmrelease.yaml
+  - infra/cert-manager
