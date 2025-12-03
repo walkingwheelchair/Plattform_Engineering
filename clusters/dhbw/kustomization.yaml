@@ -11,3 +11,4 @@ resources:
   - infra/external-dns/helmrelease.yaml
   - infra/helmrepo-cert-manager.yaml
   - infra/cert-manager
+  - kube-prometheus-stack.yaml
