@@ -45,5 +45,5 @@ spec:
     txtOwnerId: "dhbw"
 
     domainFilters:
-      - "dhbw.dski23a.timebertt.dev"
+      - "dski23a.timebertt.dev"
 
